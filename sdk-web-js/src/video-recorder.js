@@ -54,7 +54,7 @@ class VideoRecorder {
   }
 
   async capture() {
-    const { video } = await this.recordSession.capture({
+    const { media: video } = await this.recordSession.capture({
       faceCheckerOptions: { check: "disabled" }, // disable face detection on capture
     });
 
