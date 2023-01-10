@@ -1,0 +1,108 @@
+.main {
+    width: 100%;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 900px;
+    height: 330px;
+}
+
+.capture-zone {
+    width: 400px;
+    height: 100%;
+}
+
+.output-zone {
+    width: 400px;
+    height: 100%;
+    border: dotted 3px gray;
+}
+
+.recorder-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.recorder-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 268px;
+}
+
+.video,
+.canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.canvas {
+    z-index: 2;
+    transform: scaleX(-1);
+}
+
+.video {
+    z-index: 1;
+    transform: scaleX(-1);
+    box-shadow: 15px;
+}
+
+.item-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    text-align: center;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.btn {
+    display: inline-block;
+    align-items: center;
+    vertical-align: top;
+    padding: 10px;
+    border: solid 1px #333333;
+    border-radius: 10px;
+    background-color: #333333;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+
+    width: 100px;
+}
+
+.hidden {
+    display: none;
+}
+
+.capture-btn:hover {
+    background-color: #444444;
+}
+
+.output-label {
+    color: #333333;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+.output-video {
+    width: 400px;
+    height: 268px;
+}
