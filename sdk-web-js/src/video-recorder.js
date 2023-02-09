@@ -28,9 +28,9 @@ class VideoRecorder {
         },
       },
       cameraConfig: {
-        preferedResolution: VideoResolutionPreset.STD_480P, // 480p and 16/9 aspect ratio
-        preferedFps: 24,
-        facingMode: FacingMode.FRONT,
+        //preferedResolution: VideoResolutionPreset.STD_480P, // 480p and 16/9 aspect ratio
+        //preferedFps: 24,
+        //facingMode: FacingMode.FRONT,
       },
       recordingConfig: {
         audio: false,
@@ -48,7 +48,7 @@ class VideoRecorder {
   async init() {
     this.recordSession = await this.unisseySdk.createSession(
       this.videoElmt,
-      AcquisitionPreset.SUBSTANTIAL,
+      AcquisitionPreset.FAST,
       this.config
     );
   }

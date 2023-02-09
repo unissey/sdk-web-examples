@@ -1,0 +1,44 @@
+:root {
+  --uni-primary-color: #333;
+  --uni-secondary-color: #806d66;
+  --uni-primary-color-lighter: #444;
+  --uni-secondary-color-lighter: rgba(128, 109, 102, 0.70);
+  --uni-alt-color: #333;
+  --uni-alt-color-lighter: #444;
+  --uni-light-color: #fff;
+  --uni-dark-color: #202020;
+  --uni-error-color: #f44336;
+  --uni-light-color-variant-1: rgba(51, 51, 51, 0.05);
+  --uni-light-color-variant-2: rgba(51, 51, 51, 0.1);
+
+  --uni-btn-padding: 10px 15px;
+  --uni-btn-border: solid 1px;
+  --uni-btn-border-radius: 30px;
+  --uni-btn-font-size: 16px;
+  --uni-btn-text-transform: normal;
+  --uni-btn-border-outlined: solid 1px;
+  --uni-btn-label-margin: 10px 0px;
+  --uni-btn-disabled-bg-color: #eee;
+
+
+  --uni-card-bg-color: rgba(51, 51, 51, 0.05);
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100vh;
+
+  text-align: center;
+}
+
+.SdkZone {
+  width: 800px;
+}
+
+.ResultZone {
+  width: 500px;
+}
