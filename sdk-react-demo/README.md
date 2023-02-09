@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# SDK React example
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+In this project we are using Unissey SDK React. It uses the component `FullCapture` to perform video recording and picture capture.
 
-In the project directory, you can run:
 
-### `npm start`
+## Get a personnal access token
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+First generate an access token by following this link. Make sure to include at least the `repo` and `read:packages` permission to the access token.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Setup the project
 
-### `npm test`
+-   Clone the repository
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone git@github.com:unissey/sdk-web-examples.git
+```
 
-### `npm run build`
+-   Change directory to sdk-react-demo
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+cd sdk-react-demo
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-   Authenticate to github npm registry
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Create `NPM_TOKEN` environnment variable with your github personnal token
 
-### `npm run eject`
+```bash
+export NPM_TOKEN = <Your github personnal token>
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+-   Install dependencies
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Run the project
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+npm run dev
+```
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Open [http://localhost:3000](http://localhost:3000) and your are done!
