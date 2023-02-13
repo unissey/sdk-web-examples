@@ -1,6 +1,6 @@
 import './App.css';
 
-import {FullCapture } from "@unissey/sdk-react__next";
+import {FullCapture } from "@unissey/sdk-react";
 
 
 type Data = {
