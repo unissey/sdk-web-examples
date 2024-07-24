@@ -75,8 +75,11 @@ class VideoRecorder extends HTMLElement {
       this.enableCaptureBtn()
     }
 
-    // Setup session parameters
-    this.config = {
+    this.createSession();
+  }
+
+  async createSession() {
+    this.recordSession = await UnisseySdk.createSession(this.videoElmt, this.preset, this.canvasElmt, {
       overlayConfig: {
         colors: {
           background: [33, 33, 33, 0.4], // background color of overlay
@@ -84,13 +87,7 @@ class VideoRecorder extends HTMLElement {
           progressColor: [255, 255, 255, 1], // displayed during acquisition
         },
       },
-    };
-
-    this.createSession();
-  }
-
-  async createSession() {
-    this.recordSession = await UnisseySdk.createSession(this.videoElmt, this.preset, this.canvasElmt, this.config);
+    });
   }
 
   async resetSession() {
