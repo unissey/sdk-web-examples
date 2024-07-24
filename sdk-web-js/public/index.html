@@ -7,31 +7,41 @@
   </head>
   <body>
     <main class="main item-center">
+      <div class="preset-selector">
+        <h2>Select a preset</h2>
+        <form>
+          <select id="preset-select" class="preset-select">
+            <option value="selfie-substantial">SELFIE SUBSTANTIAL</option>
+            <option value="selfie-fast">SELFIE FAST</option> 
+            <option value="doc-video">DOC VIDEO</option>
+            <option value="doc-image">DOC IMAGE</option>
+          </select>
+        </form>
+      </div>
+
       <div class="container">
-        <div class="capture-zone">
+        <video-recorder id="video-recorder" preset="selfie-fast"></video-recorder> 
+        <div class="output-zone item-center" id="output-zone">
+          <span class="output-label" id="output-label">Capture output</span>
+        </div>
+      </div>
+    </main>
+
+    <template id="video-recorder-template">
+      <div class="capture-zone">
           <div class="recorder-container">
-            <div class="recorder-wrapper">
+            <div id="recorder-wrapper" class="recorder-wrapper">
               <canvas id="canvas" class="canvas"></canvas>
-              <video
-                id="video"
-                class="video"
-                autoplay
-                muted
+              <video id="video" class="video" autoplay muted
                 playsinline
               ></video>
             </div>
           </div>
 
           <div class="buttons item-center">
-            <button id="capture-btn" class="btn">Capture</button>
-            <button id="reset-btn" class="hidden">Reset</button>
+            <button id="capture-btn" class="btn" disabled>Capture</button>
           </div>
-        </div>
-
-        <div class="output-zone item-center" id="output-zone">
-          <span class="output-label" id="output-label">Capture output</span>
-        </div>
       </div>
-    </main>
+    </template>
   </body>
 </html>
