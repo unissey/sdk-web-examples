@@ -15,7 +15,7 @@ class VideoRecorder extends HTMLElement {
   constructor() {
     super();
 
-    // Values are difined when the element is mounted on the document
+    // Values are defined when the element is mounted on the document
    
     // HTML Elements
     this.canvasElmt = null;
