@@ -49,3 +49,10 @@ npm run dev
 ```
 
 Open [http://localhost:5000](http://localhost:5000) and your are done!
+
+
+## Files overview
+
+* `src/video-recorder.js` A vanilla [web component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) that displays video, canvas elements and a button to start the capture. It create a recording session and setup lifecycle methods
+* `src/main.js` handle capture result and displays it on the page. It handle preset change
+* `public/index.html` html page, it contains [template](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_templates_and_slots) for `video-recorder` component

@@ -4,7 +4,7 @@ const outDir = path.resolve(__dirname, "public");
 
 module.exports = {
   entry: {
-    recorder: "./src/video-recorder.js",
+    recorder: "./src/main.js",
   },
   output: {
     filename: "[name].bundle.js",
