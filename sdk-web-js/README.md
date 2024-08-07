@@ -48,7 +48,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5000](http://localhost:5000) and your are done!
+Open [https://localhost:5000](https://localhost:5000) and your are done!
 
 
 ## Files overview

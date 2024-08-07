@@ -26,6 +26,8 @@ class VideoRecorder extends HTMLElement {
     this.recordSession = null;
     this.preset = null;
     this.config = null;
+
+    this.mediaStream = null;
   }
 
   /**
@@ -42,7 +44,7 @@ class VideoRecorder extends HTMLElement {
     this.videoElmt = this.querySelector("#video");
     this.captureBtn = this.querySelector("#capture-btn");
 
-    this.preset = defaultPreset;
+    this.preset = defaultPreset;  
 
 
     // Get a reference to sdk event emitter to track session lifecycle
@@ -88,6 +90,9 @@ class VideoRecorder extends HTMLElement {
         },
       },
     });
+
+    this.mediaStream = this.videoElmt.srcObject;
+    console.log(this.mediaStream);
   }
 
   async resetSession() {
