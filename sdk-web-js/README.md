@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this project we are using [Unissey javascript SDK](https://github.com/unissey/sdk-web-js/pkgs/npm/sdk-web-js/62620965)for recording a video and displaying the output in the same web page.
+In this project we are using [Unissey javascript SDK](https://hackmd.io/@unissey/SJLztxCYt)for recording a video and displaying the output in the same web page.
 
 [Try it here](https://astounding-jelly-e183ec.netlify.app/)
 
