@@ -16,6 +16,9 @@ function main() {
     videoRecorder.addEventListener("capture-done", (e) => {
         const { media, metadata, preset } = e.detail;
 
+        console.log(metadata);
+        console.log(media);
+
         // Media and metadata are used by Unissey API
 
         // In the example an element displays the media

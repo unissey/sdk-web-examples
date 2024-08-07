@@ -91,8 +91,8 @@ class VideoRecorder extends HTMLElement {
       },
     });
 
+    // Access the media stream reference for advanced usage
     this.mediaStream = this.videoElmt.srcObject;
-    console.log(this.mediaStream);
   }
 
   async resetSession() {
