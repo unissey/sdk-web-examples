@@ -48,25 +48,21 @@ class VideoRecorder extends HTMLElement {
 
     this.preset = defaultPreset;  
 
-
-    // Get a reference to sdk event emitter to track session lifecycle
-    const sessionLifecycle = UnisseySdk.getReferenceToEventEmitter();
-
     // Session Status: NO_SESSION -> READY -> STARTING -> RUNNING -> ABORTING
-    sessionLifecycle.on(AcquisitionEvent.STATUS, (status) => {
+    UnisseySdk.addListener(AcquisitionEvent.STATUS, (status) => {
       this.handleSessionStatusChange(status);
     })
      
     // Session errors: NO_FACE, FORBIDDEN_ACTION, MOVE, CAMERA_ERROR
-    sessionLifecycle.on(AcquisitionEvent.ISSUE, (status) => {
+    UnisseySdk.addListener(AcquisitionEvent.ISSUE, (status) => {
     })
 
     // Face information, to check if face is centered
-    sessionLifecycle.on(AcquisitionEvent.FACE_INFO, (type, value) => {
+    UnisseySdk.addListener(AcquisitionEvent.FACE_INFO, (type, value) => {
     })
 
     // Acquisition progress, usefull for displaying a progress bar 
-    sessionLifecycle.on(AcquisitionEvent.PROGRESS, (progress) => {
+    UnisseySdk.addListener(AcquisitionEvent.PROGRESS, (progress) => {
     })
 
     // Start Capture
