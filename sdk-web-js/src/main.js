@@ -8,6 +8,7 @@ const VALID_PRESETS = [
     AcquisitionPreset.SELFIE_SUBSTANTIAL
 ];
 
+
 function main() {
     const videoRecorder = document.getElementById("video-recorder");
 

@@ -10,7 +10,7 @@ In this project we are using [Unissey javascript SDK](https://hackmd.io/@unissey
 
 ## Get a personnal access token
 
-First generate an access token by following this link. Make sure to include at least the `repo` and `read:packages` permission to the access token.
+First generate an access token by following instructions on this [link](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Make sure to include at least the `repo` and `read:packages` permission to the access token.
 
 Then, to get access permissions, you will need to contact someone from the Unissey organisation with your github account name.
 
