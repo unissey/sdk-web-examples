@@ -7,8 +7,6 @@ import {
   StatusEvent,
 } from "@unissey/sdk-web-js";
 
-UnisseySdk.hkdb = false;
-
 
 class VideoRecorder extends HTMLElement {
 
