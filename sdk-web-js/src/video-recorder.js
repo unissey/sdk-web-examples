@@ -61,6 +61,7 @@ class VideoRecorder extends HTMLElement {
 
     // Acquisition progress, usefull for displaying a progress bar 
     UnisseySdk.addListener(AcquisitionEvent.PROGRESS, (progress) => {
+      console.log("Progress : ", progress);
     })
 
     // Start Capture
