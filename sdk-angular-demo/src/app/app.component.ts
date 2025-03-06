@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AcquisitionPreset, FaceChecker, EN } from "@unissey/sdk-angular";
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { AcquisitionPreset, FaceChecker, EN, SessionConfig, IadMode, IadConfig } from "@unissey-web/sdk-angular";
 import { AnalyzeService } from './app.service';
 import axios from "axios";
 import { environment } from 'src/environment';
@@ -13,61 +13,46 @@ import { response } from 'express';
 })
 export class AppComponent {
   title = 'sdk-angular-demo';
+  iadStr: string | undefined = undefined;
 
-  constructor(private analyzeService: AnalyzeService){}
+  constructor(private analyzeService: AnalyzeService, private cdr: ChangeDetectorRef){}
 
   strings = EN.videoRecorder;
+  config: SessionConfig | undefined = undefined;
 
-  config = {
-    overlayConfig: {
-      colors: {
-        progressColor: [0, 0, 0, 1]
-      }
-    }
+  ngOnInit() {
+    this.iadPrepare();
   }
 
-  recorderOptions = {
-    config: {
-      recordingConfig: {
-        audio: true,
-        bitRateKbps: 2000,
-        length: {
-          type: "duration",
-          durationMs: 2000,
-        },
-      },
-    },
-    preset: AcquisitionPreset.SELFIE_SUBSTANTIAL,
-    faceChecker: "enabled" as FaceChecker,
-    instructionMessages: [
-      {
-        message: "Instruction 1",
-        duration: 5000,
-      },
-      {
-        message: "Instruction 2",
-        duration: 5000,
-      },
-      {
-        message: "Instruction 3",
-        duration: 5000
+  iadPrepare() {
+    this.analyzeService.performIadPrepare().subscribe(data => {
+      this.iadStr = data;
+      this.config = {
+        iadConfig: {
+          mode: IadMode.PASSIVE,
+          data: data
+        }
       }
-    ]
-  };
+
+      console.log(this.config.iadConfig);
+      this.cdr.detectChanges();
+    })
+  }
 
   // Handle Selfie Data
-  async onSelfie(e: { media: Blob; metadata: unknown }) {
+  async onRecord(data: { media: Blob; metadata: unknown }) {
     
     const payload = new FormData();
     
     payload.append("processings", "liveness");
     payload.append("selfie-detection-criteria", "single");
-    payload.append("metadata", e.metadata as string);
-    payload.append("selfie", e.media);
+    payload.append("selfie-metadata", data.metadata as string);
+    payload.append("selfie", data.media);
+    payload.append("gdpr-consent", "true");
     
-    await axios.post(environment.apiAnalyzeUrl, payload, {
+    await axios.post("https://api.test.unissey.com/analyze/v3", payload, {
       headers: {
-        Authorization: environment.apiKey
+        Authorization: environment.apiKey,
       }
     })
     .then(response => alert(JSON.stringify(response.data)))
