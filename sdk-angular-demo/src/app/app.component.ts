@@ -37,7 +37,7 @@ export class AppComponent {
         },
       },
     },
-    preset: AcquisitionPreset.SELFIE_SUBSTANTIAL,
+    preset: AcquisitionPreset.SELFIE_STD,
     faceChecker: "enabled" as FaceChecker,
     instructionMessages: [
       {

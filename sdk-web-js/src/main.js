@@ -2,10 +2,11 @@ import { AcquisitionPreset } from "@unissey/sdk-web-js";
 import "./video-recorder";
 
 const VALID_PRESETS = [
-    AcquisitionPreset.SELFIE_FAST, 
+    AcquisitionPreset.SELFIE_MJPEG, 
+    AcquisitionPreset.SELFIE_STD,
+    AcquisitionPreset.SELFIE_COMPOSITE,
     AcquisitionPreset.DOC_VIDEO, 
     AcquisitionPreset.DOC_IMAGE, 
-    AcquisitionPreset.SELFIE_SUBSTANTIAL
 ];
 
 
@@ -17,7 +18,7 @@ function main() {
     videoRecorder.addEventListener("capture-done", (e) => {
         const { media, metadata, preset } = e.detail;
 
-        console.log(metadata);
+        // console.log(metadata);
         console.log(media);
 
         // Media and metadata are used by Unissey API
@@ -27,7 +28,7 @@ function main() {
         let outputElmt = null;
 
         switch(preset) {
-            case AcquisitionPreset.SELFIE_FAST:
+            case AcquisitionPreset.SELFIE_MJPEG:
                 outputElmt = document.createElement("div");
                 outputElmt.innerHTML = `Mjpeg Player not implemented. This preset is not suited for human review`
                 break;

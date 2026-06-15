@@ -5,18 +5,17 @@ import {
   AcquisitionPreset,
   AcquisitionEvent,
   StatusEvent,
+  LogLevel,
 } from "@unissey/sdk-web-js";
 
-
 class VideoRecorder extends HTMLElement {
-
-  static observedAttributes = ["preset"]
+  static observedAttributes = ["preset"];
 
   constructor() {
     super();
 
     // Values are defined when the element is mounted on the document
-   
+
     // HTML Elements
     this.canvasElmt = null;
     this.videoElmt = null;
@@ -37,42 +36,48 @@ class VideoRecorder extends HTMLElement {
     const template = document.getElementById("video-recorder-template");
     this.appendChild(template.content.cloneNode(true));
 
-    const defaultPreset = AcquisitionPreset.SELFIE_SUBSTANTIAL;
+    const defaultPreset = AcquisitionPreset.SELFIE_STD;
 
     // Get canvas and video element from the DOM
     this.canvasElmt = this.querySelector("#canvas");
     this.videoElmt = this.querySelector("#video");
     this.captureBtn = this.querySelector("#capture-btn");
 
-    this.preset = defaultPreset;  
+    this.preset = defaultPreset;
+
+    UnisseySdk.setLogLevel(LogLevel.INFO);
 
     // Session Status: NO_SESSION -> READY -> STARTING -> RUNNING -> ABORTING
     UnisseySdk.addListener(AcquisitionEvent.STATUS, (status) => {
       this.handleSessionStatusChange(status);
-    })
-     
+    });
+
     // Session errors: NO_FACE, FORBIDDEN_ACTION, MOVE, CAMERA_ERROR
-    UnisseySdk.addListener(AcquisitionEvent.ISSUE, (status) => {
-    })
+    UnisseySdk.addListener(AcquisitionEvent.ISSUE, (issue) => {
+      console.warn("Unissey session issue:", issue);
+    });
 
     // Face information, to check if face is centered
-    UnisseySdk.addListener(AcquisitionEvent.FACE_INFO, (type, value) => {
-    })
+    UnisseySdk.addListener(AcquisitionEvent.FACE_INFO, (type, value) => {});
 
-    // Acquisition progress, usefull for displaying a progress bar 
+    // Acquisition progress, usefull for displaying a progress bar
     UnisseySdk.addListener(AcquisitionEvent.PROGRESS, (progress) => {
       console.log("Progress : ", progress);
-    })
+    });
 
     // Start Capture
     this.captureBtn.onclick = async () => {
       const { media, metadata } = await this.capture();
 
       // dispatch media and meta data with a custom event
-      this.dispatchEvent(new CustomEvent("capture-done", {detail: {media, metadata, preset: this.preset}}));
+      this.dispatchEvent(
+        new CustomEvent("capture-done", {
+          detail: { media, metadata, preset: this.preset },
+        }),
+      );
 
-      this.enableCaptureBtn()
-    }
+      this.enableCaptureBtn();
+    };
 
     this.createSession();
   }
@@ -93,32 +98,33 @@ class VideoRecorder extends HTMLElement {
   }
 
   async resetSession() {
-    if(this.recordSession !== null) {
+    if (this.recordSession !== null) {
       // Release the previous session
       await this.recordSession.release();
 
       // Create a new session
       await this.createSession();
     }
-  } 
-
+  }
 
   /**
-   * 
-   * @param {StatusEvent} status 
+   *
+   * @param {StatusEvent} status
    */
-  handleSessionStatusChange(status){
-    switch(status) {
+  handleSessionStatusChange(status) {
+    switch (status) {
       case StatusEvent.READY:
         // adjust size of the video wrapper to fit container size
-        this.adjsutContainerSize()
+        this.adjsutContainerSize();
         this.enableCaptureBtn();
         break;
+
       case StatusEvent.NO_SESSION:
-        this.recordSession = null 
+        this.recordSession = null;
         break;
+
       case StatusEvent.STARTING:
-        this.disableCaptureBtn()
+        this.disableCaptureBtn();
         break;
     }
   }
@@ -153,21 +159,21 @@ class VideoRecorder extends HTMLElement {
 
   /**
    * Called when observed attributes are changed, added, removed or replaced
-   * 
-   * @param {string} name 
-   * @param {string} oldValue 
-   * @param {string} newValue 
+   *
+   * @param {string} name
+   * @param {string} oldValue
+   * @param {string} newValue
    */
   attributeChangedCallback(name, oldValue, newValue) {
-    switch(name) {
+    switch (name) {
       case "preset":
-        if(newValue !== this.preset) {
+        if (newValue !== this.preset) {
           this.preset = newValue;
           this.resetSession();
         }
         break;
     }
-  } 
+  }
 
   /**
    * Start the capture and return data
@@ -181,6 +187,5 @@ class VideoRecorder extends HTMLElement {
     return data;
   }
 }
-
 
 customElements.define("video-recorder", VideoRecorder);

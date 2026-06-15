@@ -24,6 +24,6 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "@unissey/sdk-web-js": "^0.3.5"
+    "@unissey/sdk-web-js": "6.0.0-rc.2"
   }
 }
