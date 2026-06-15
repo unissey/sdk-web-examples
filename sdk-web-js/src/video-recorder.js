@@ -20,6 +20,8 @@ class VideoRecorder extends HTMLElement {
     this.canvasElmt = null;
     this.videoElmt = null;
     this.captureBtn = null;
+    this.pauseBtn = null;
+    this.stopBtn = null;
 
     // Session config
     this.recordSession = null;
@@ -42,8 +44,12 @@ class VideoRecorder extends HTMLElement {
     this.canvasElmt = this.querySelector("#canvas");
     this.videoElmt = this.querySelector("#video");
     this.captureBtn = this.querySelector("#capture-btn");
+    this.pauseBtn = this.querySelector("#pause-btn");
+    this.stopBtn = this.querySelector("#stop-btn");
+    this.recorderWrappper = this.querySelector("#recorder-wrapper");
 
     this.preset = defaultPreset;
+    this.updateDocVideoButtons(defaultPreset);
 
     UnisseySdk.setLogLevel(LogLevel.INFO);
 
@@ -79,11 +85,28 @@ class VideoRecorder extends HTMLElement {
       this.enableCaptureBtn();
     };
 
+    this.pauseBtn.onclick = async () => {
+      if (this.pauseBtn.textContent === "Pause") {
+        const pauseEvent = new CustomEvent("pauseRecording");
+        this.recordSession.dispatchEvent(pauseEvent);
+        this.pauseBtn.textContent = "Resume";
+      } else {
+        const resumeEvent = new CustomEvent("resumeRecording");
+        this.recordSession.dispatchEvent(resumeEvent);
+        this.pauseBtn.textContent = "Pause";
+      }
+    };
+
+    this.stopBtn.onclick = async () => {
+      const stopEvent = new CustomEvent("stopRecording");
+      this.recordSession.dispatchEvent(stopEvent);
+    };
+
     this.createSession();
   }
 
   async createSession() {
-    this.recordSession = await UnisseySdk.createSession(this.videoElmt, this.preset, this.canvasElmt, {
+    const sessionConfig = {
       overlayConfig: {
         colors: {
           background: [33, 33, 33, 0.4], // background color of overlay
@@ -91,7 +114,22 @@ class VideoRecorder extends HTMLElement {
           progressColor: [255, 255, 255, 1], // displayed during acquisition
         },
       },
-    });
+    };
+
+    const isDocVideo = this.preset === AcquisitionPreset.DOC_VIDEO;
+    if (isDocVideo) {
+      if (!sessionConfig.recordingConfig) sessionConfig.recordingConfig = {};
+      sessionConfig.recordingConfig.length = {
+        type: "duration",
+        durationMs: 0, // This...
+      };
+    }
+
+    this.recordSession = await UnisseySdk.createSession(
+      this.recorderWrappper,
+      this.preset,
+      sessionConfig,
+    );
 
     // Access the media stream reference for advanced usage
     this.mediaStream = this.videoElmt.srcObject;
@@ -117,6 +155,7 @@ class VideoRecorder extends HTMLElement {
         // adjust size of the video wrapper to fit container size
         this.adjsutContainerSize();
         this.enableCaptureBtn();
+        this.disablControlBtn();
         break;
 
       case StatusEvent.NO_SESSION:
@@ -125,6 +164,7 @@ class VideoRecorder extends HTMLElement {
 
       case StatusEvent.STARTING:
         this.disableCaptureBtn();
+        this.enableControlBtn();
         break;
     }
   }
@@ -135,6 +175,16 @@ class VideoRecorder extends HTMLElement {
 
   enableCaptureBtn() {
     this.captureBtn.disabled = false;
+  }
+
+  disablControlBtn() {
+    this.pauseBtn.disabled = true;
+    this.stopBtn.disabled = true;
+  }
+
+  enableControlBtn() {
+    this.pauseBtn.disabled = false;
+    this.stopBtn.disabled = false;
   }
 
   /**
@@ -169,10 +219,18 @@ class VideoRecorder extends HTMLElement {
       case "preset":
         if (newValue !== this.preset) {
           this.preset = newValue;
+          this.updateDocVideoButtons(newValue);
           this.resetSession();
         }
         break;
     }
+  }
+
+  updateDocVideoButtons(preset) {
+    if (!this.pauseBtn || !this.stopBtn) return;
+    const isDocVideo = preset === AcquisitionPreset.DOC_VIDEO;
+    this.pauseBtn.classList.toggle("hidden", !isDocVideo);
+    this.stopBtn.classList.toggle("hidden", !isDocVideo);
   }
 
   /**
