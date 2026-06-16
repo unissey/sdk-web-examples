@@ -51,14 +51,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    max-width: 400px;
-    max-height: 400px;
     border-radius: 10px;
 }
 
 .canvas {
     z-index: 2;
-    transform: scaleX(-1);
 }
 
 .video {
@@ -121,7 +118,6 @@
 
 .output-video {
     width: 400px;
-    height: 268px;
 }
 
 .preset-selector {

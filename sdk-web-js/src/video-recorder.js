@@ -1,5 +1,3 @@
-import { setElementDimensions } from "./utils";
-
 import {
   UnisseySdk,
   AcquisitionPreset,
@@ -126,8 +124,9 @@ class VideoRecorder extends HTMLElement {
     }
 
     this.recordSession = await UnisseySdk.createSession(
-      this.recorderWrappper,
+      this.videoElmt,
       this.preset,
+      this.canvasElmt,
       sessionConfig,
     );
 
@@ -201,10 +200,6 @@ class VideoRecorder extends HTMLElement {
 
     // Video height to maintain aspect ratio
     const videoHeight = boxWidth / videoRatio;
-
-    setElementDimensions(container, boxWidth, videoHeight);
-    setElementDimensions(this.canvasElmt, boxWidth, videoHeight);
-    setElementDimensions(this.videoElmt, boxWidth, videoHeight);
   }
 
   /**
