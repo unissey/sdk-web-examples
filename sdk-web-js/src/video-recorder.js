@@ -15,8 +15,6 @@ class VideoRecorder extends HTMLElement {
     // Values are defined when the element is mounted on the document
 
     // HTML Elements
-    this.canvasElmt = null;
-    this.videoElmt = null;
     this.captureBtn = null;
     this.pauseBtn = null;
     this.stopBtn = null;
@@ -25,8 +23,6 @@ class VideoRecorder extends HTMLElement {
     this.recordSession = null;
     this.preset = null;
     this.config = null;
-
-    this.mediaStream = null;
   }
 
   /**
@@ -39,8 +35,6 @@ class VideoRecorder extends HTMLElement {
     const defaultPreset = AcquisitionPreset.SELFIE_STD;
 
     // Get canvas and video element from the DOM
-    this.canvasElmt = this.querySelector("#canvas");
-    this.videoElmt = this.querySelector("#video");
     this.captureBtn = this.querySelector("#capture-btn");
     this.pauseBtn = this.querySelector("#pause-btn");
     this.stopBtn = this.querySelector("#stop-btn");
@@ -111,6 +105,7 @@ class VideoRecorder extends HTMLElement {
           innerBorder: [33, 33, 33, 0.6], // borders color of oval
           progressColor: [255, 255, 255, 1], // displayed during acquisition
         },
+        // disableCropping: true,   // to test "disableCropping"
       },
     };
 
@@ -124,14 +119,10 @@ class VideoRecorder extends HTMLElement {
     }
 
     this.recordSession = await UnisseySdk.createSession(
-      this.videoElmt,
+      this.recorderWrappper,
       this.preset,
-      this.canvasElmt,
       sessionConfig,
     );
-
-    // Access the media stream reference for advanced usage
-    this.mediaStream = this.videoElmt.srcObject;
   }
 
   async resetSession() {
@@ -152,7 +143,6 @@ class VideoRecorder extends HTMLElement {
     switch (status) {
       case StatusEvent.READY:
         // adjust size of the video wrapper to fit container size
-        this.adjsutContainerSize();
         this.enableCaptureBtn();
         this.disablControlBtn();
         break;
@@ -184,22 +174,6 @@ class VideoRecorder extends HTMLElement {
   enableControlBtn() {
     this.pauseBtn.disabled = false;
     this.stopBtn.disabled = false;
-  }
-
-  /**
-   * Adjust the size of elements to maintain video aspect ratio
-   */
-  adjsutContainerSize() {
-    const container = this.querySelector("#recorder-wrapper");
-
-    // Width of the HTML element that contains the recorder
-    const boxWidth = container.offsetWidth;
-
-    // Aspect ratio of the video
-    const videoRatio = this.videoElmt.videoWidth / this.videoElmt.videoHeight;
-
-    // Video height to maintain aspect ratio
-    const videoHeight = boxWidth / videoRatio;
   }
 
   /**
