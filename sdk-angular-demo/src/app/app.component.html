@@ -1,7 +1,7 @@
 <!-- Selfie Capture Acquisition Flow -->
 <div class="container">
-  <div class="sdk-container">
-    <unissey-video-recorder [config]="config">
+  <div class="sdk-container" *ngIf="config !== undefined">
+    <unissey-video-recorder [config]="config" (recordCompleted)="onRecord($event)">
 
     </unissey-video-recorder>
   </div>
