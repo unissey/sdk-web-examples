@@ -1,9 +1,24 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+jest.mock(
+  "@unissey-web/sdk-react",
+  () => ({
+    AcquisitionPreset: { SELFIE_MJPEG: "selfie-mjpeg" },
+    VideoRecorder: () => <div data-testid="video-recorder" />,
+    SelfieCapture: () => <div data-testid="selfie-capture" />,
+    ReferenceCapture: () => <div data-testid="reference-capture" />,
+    FullCapture: () => <div data-testid="full-capture" />,
+  }),
+  { virtual: true },
+);
+
+test("renders capture demo navigation", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: /^video recorder$/i }),
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: /iad video recorder/i }),
+  ).toBeInTheDocument();
 });
