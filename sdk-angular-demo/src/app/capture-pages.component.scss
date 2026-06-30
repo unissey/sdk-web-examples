@@ -1,0 +1,47 @@
+.page {
+  width: min(900px, 100%);
+  text-align: center;
+}
+
+.help {
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.iad {
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  width: min(560px, 100%);
+  text-align: left;
+  color: #333;
+}
+
+input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+button {
+  padding: 10px 16px;
+  border: 1px solid #333;
+  border-radius: 999px;
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.error {
+  color: #f44336;
+}
