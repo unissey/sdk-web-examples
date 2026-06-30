@@ -11,10 +11,10 @@ npm install
 ## Run
 
 ```bash
-npm start
+npm run dev
 ```
 
-Open <http://localhost:3000>.
+Open the local URL printed by Vite, usually <http://localhost:5173>.
 
 ## Pages
 
@@ -45,10 +45,8 @@ This is the only HTTP call performed by the demo. Replace or adapt `performIadPr
 
 ```bash
 npm run build
-npm test -- --watchAll=false
+npm test
 ```
-
-`react-scripts` may print source-map warnings for web component polyfills. These warnings do not prevent the demo from building.
 
 ## Camera note
 
