@@ -1,0 +1,74 @@
+<section class="page">
+  <h1>{{ title }}</h1>
+  <p class="help">This demo logs SDK event payloads to the browser console after you complete a capture. Start and finish a capture before checking the logs.</p>
+
+  <ng-container [ngSwitch]="page">
+    <unissey-video-recorder
+      *ngSwitchCase="'video'"
+      [preset]="AcquisitionPreset.SELFIE_MJPEG"
+      [config]="videoConfig"
+      (recordCompleted)="logRecord($event)"
+      (recorderReady)="logReady($event)"
+    ></unissey-video-recorder>
+
+    <unissey-selfie-capture
+      *ngSwitchCase="'selfie'"
+      (selfie)="logSelfie($event)"
+      (recordCompleted)="logRecord($event)"
+      (recorderReady)="logReady($event)"
+    ></unissey-selfie-capture>
+
+    <unissey-reference-capture
+      *ngSwitchCase="'reference'"
+      (reference)="logReference($event)"
+      (recordCompleted)="logReference($event)"
+      (recorderReady)="logReady($event)"
+    ></unissey-reference-capture>
+
+    <unissey-full-capture
+      *ngSwitchCase="'full'"
+      (data)="logData($event)"
+      (recorderReady)="logReady($event)"
+    ></unissey-full-capture>
+
+    <div *ngSwitchCase="'iad'" class="iad">
+      <p class="help">
+        IAD requires prepared session data from your backend. Provide your IAD prepare endpoint and API key below.
+        This page only calls the prepare endpoint; captured media is only logged after you complete the capture.
+      </p>
+
+      <label>
+        IAD prepare URL
+        <input
+          type="url"
+          name="iadPrepareUrl"
+          [(ngModel)]="iadPrepareUrl"
+          placeholder="https://your-backend.example.com/iad/prepare"
+        />
+      </label>
+
+      <label>
+        API key / Authorization header value
+        <input
+          type="password"
+          name="iadApiKey"
+          [(ngModel)]="iadApiKey"
+          placeholder="Bearer ... or your API key"
+        />
+      </label>
+
+      <button type="button" (click)="prepareIad()" [disabled]="loadingIad">
+        {{ loadingIad ? 'Preparing IAD session...' : 'Prepare IAD session' }}
+      </button>
+      <p *ngIf="iadError" class="error">{{ iadError }}</p>
+
+      <unissey-video-recorder
+        *ngIf="iadConfig"
+        [preset]="AcquisitionPreset.SELFIE_MJPEG"
+        [config]="iadConfig"
+        (recordCompleted)="logRecord($event)"
+        (recorderReady)="logReady($event)"
+      ></unissey-video-recorder>
+    </div>
+  </ng-container>
+</section>

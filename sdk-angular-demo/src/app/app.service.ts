@@ -1,35 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import { environment } from 'src/environment';
-
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AnalyzeService {
-  constructor(private http: HttpClient) { }
+  /**
+   * IAD requires prepare data created by your backend before the recorder starts.
+   * This sample makes the IAD prepare call explicit: provide your prepare URL and
+   * API key in the demo page. It does not upload captured media.
+   */
+  async performIadPrepare(url: string, apiKey: string): Promise<string> {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: apiKey ? { Authorization: apiKey } : undefined,
+    });
 
+    if (!response.ok) {
+      throw new Error(`IAD prepare failed: ${response.status} ${response.statusText}`);
+    }
 
-  performLivenessAnalysis(selfie: Blob, metadata: string) {
-    
-    const payload = new FormData();
-    payload.append("selfie", selfie);
-    payload.append("selfie-metadata", metadata);
-
-    return this.http.post<any>("https://test.api-analyze.unissey.com/api/v3/analyze", metadata, {
-         headers: new HttpHeaders({
-            Authorization: environment.apiKey
-        })
-    })
-  }
-
-  performIadPrepare(): Observable<string> {
-    const url = `https://api.test.unissey.com/iad/v3/prepare`;
-    return this.http.post(url, {}, {
-      responseType: "text",
-      headers: new HttpHeaders({
-        Authorization: environment.apiKey,
-      })
-    })
+    return response.text();
   }
 }

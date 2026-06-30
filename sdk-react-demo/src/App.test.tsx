@@ -1,9 +1,13 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import { test } from "vitest";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders capture demo navigation", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: /^video recorder$/i }),
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: /iad video recorder/i }),
+  ).toBeInTheDocument();
 });

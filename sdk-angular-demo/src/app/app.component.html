@@ -1,8 +1,11 @@
-<!-- Selfie Capture Acquisition Flow -->
-<div class="container">
-  <div class="sdk-container" *ngIf="config !== undefined">
-    <unissey-video-recorder [config]="config" (recordCompleted)="onRecord($event)">
+<nav class="nav">
+  <a routerLink="/video-recorder" routerLinkActive="active">Video recorder</a>
+  <a routerLink="/selfie" routerLinkActive="active">Selfie capture</a>
+  <a routerLink="/reference" routerLinkActive="active">Reference capture</a>
+  <a routerLink="/full-capture" routerLinkActive="active">Full capture</a>
+  <a routerLink="/iad-video-recorder" routerLinkActive="active">IAD video recorder</a>
+</nav>
 
-    </unissey-video-recorder>
-  </div>
-</div>
+<main class="container">
+  <router-outlet></router-outlet>
+</main>
