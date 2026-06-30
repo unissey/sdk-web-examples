@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
-import { AcquisitionPreset, FaceChecker, EN, SessionConfig, IadMode, IadConfig } from "@unissey-web/sdk-angular";
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { AcquisitionPreset, EN, SessionConfig, Capture } from "@unissey-web/sdk-angular";
 import { AnalyzeService } from './app.service';
 import axios from "axios";
-import { environment } from 'src/environment';
-import { response } from 'express';
+import { appConfig } from './app.config';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +17,7 @@ export class AppComponent {
   constructor(private analyzeService: AnalyzeService, private cdr: ChangeDetectorRef){}
 
   strings = EN.videoRecorder;
+  preset = AcquisitionPreset.SELFIE_MJPEG;
   config: SessionConfig | undefined = undefined;
 
   ngOnInit() {
@@ -29,8 +29,7 @@ export class AppComponent {
       this.iadStr = data;
       this.config = {
         iadConfig: {
-          mode: IadMode.PASSIVE,
-          data: data
+          data
         }
       }
 
@@ -40,19 +39,24 @@ export class AppComponent {
   }
 
   // Handle Selfie Data
-  async onRecord(data: { media: Blob; metadata: unknown }) {
-    
+  async onRecord(data: Capture) {
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+
     const payload = new FormData();
+    const metadata = typeof data.metadata === "string" ? data.metadata : JSON.stringify(data.metadata);
     
     payload.append("processings", "liveness");
     payload.append("selfie-detection-criteria", "single");
-    payload.append("selfie-metadata", data.metadata as string);
+    payload.append("selfie-metadata", metadata);
     payload.append("selfie", data.media);
     payload.append("gdpr-consent", "true");
     
     await axios.post("https://api.test.unissey.com/analyze/v3", payload, {
       headers: {
-        Authorization: environment.apiKey,
+        Authorization: appConfig.apiKey,
       }
     })
     .then(response => alert(JSON.stringify(response.data)))

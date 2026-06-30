@@ -1,3 +1,7 @@
+import 'core-js';
+import 'regenerator-runtime/runtime';
+import '@webcomponents/webcomponentsjs';
+import 'lit/polyfill-support.js';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import { environment } from 'src/environment';
+import { Observable } from 'rxjs';
+import { appConfig } from './app.config';
 
 @Injectable()
 export class AnalyzeService {
@@ -16,9 +15,9 @@ export class AnalyzeService {
     payload.append("selfie", selfie);
     payload.append("selfie-metadata", metadata);
 
-    return this.http.post<any>("https://test.api-analyze.unissey.com/api/v3/analyze", metadata, {
+    return this.http.post<any>("https://test.api-analyze.unissey.com/api/v3/analyze", payload, {
          headers: new HttpHeaders({
-            Authorization: environment.apiKey
+            Authorization: appConfig.apiKey
         })
     })
   }
@@ -28,7 +27,7 @@ export class AnalyzeService {
     return this.http.post(url, {}, {
       responseType: "text",
       headers: new HttpHeaders({
-        Authorization: environment.apiKey,
+        Authorization: appConfig.apiKey,
       })
     })
   }
