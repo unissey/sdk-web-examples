@@ -1,27 +1,53 @@
-# SdkAngularDemo
+# Unissey Angular SDK demo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.0.
+Angular sample application for `@unissey-web/sdk-angular@6.0.0`.
 
-## Development server
+## Install
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```bash
+npm install
+```
 
-## Code scaffolding
+## Run
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+npm start
+```
 
-## Build
+Open <http://localhost:4200>.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Pages
 
-## Running unit tests
+The demo has one page per capture flow:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- `/video-recorder` — `unissey-video-recorder`
+- `/selfie` — `unissey-selfie-capture`
+- `/reference` — `unissey-reference-capture`
+- `/full-capture` — `unissey-full-capture`
+- `/iad-video-recorder` — IAD-enabled `unissey-video-recorder`
 
-## Running end-to-end tests
+## Logging behavior
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+The demo does not upload captured media. Complete a capture, then check the browser console for logged SDK event payloads such as `recordCompleted`, `selfie`, `reference`, `data`, and `recorderReady`.
 
-## Further help
+## IAD prepare page
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The IAD page includes form fields for:
+
+- IAD prepare URL
+- API key / Authorization header value
+
+Click **Prepare IAD session** to call the provided URL with `POST`. The response body is read as text and passed to the recorder as `iadConfig.data`.
+
+This is the only HTTP call performed by the demo. Replace or adapt `AnalyzeService.performIadPrepare()` if your project needs a different backend wrapper, headers, or authentication method.
+
+## Build and test
+
+```bash
+npm run build
+npm test -- --watch=false --browsers=ChromeHeadless
+```
+
+## Camera note
+
+Camera access requires a secure context. Browser development on `localhost` is supported; deployed demos should use HTTPS.
