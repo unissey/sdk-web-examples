@@ -13,8 +13,10 @@ This document describes how to integrate Unissey's Web SDK components into Web A
 All packages require **Version 6.0.0** for compatibility.
 
 ### Package Selection
+Install the package that matches your integration style:
+
 ```bash
-# Core Web Components (Lit-based)
+# Core Web Components (Lit-based) for direct custom-element usage
 npm install @unissey-web/web-components@6.0.0
 
 # React Wrappers (supports React 17+)
@@ -24,30 +26,11 @@ npm install @unissey-web/sdk-react@6.0.0
 npm install @unissey-web/sdk-angular@6.0.0
 ```
 
-### Essential Polyfills
-The core library requires browser-level support for web components and async runtimes. 
+> [!NOTE]
+> If you use the React or Angular wrappers, you do **not** need to install `@unissey-web/web-components` separately. The wrapper packages bundle the required web components. Install `@unissey-web/web-components` only when using the core custom elements directly.
 
-#### For Web Components & React Projects:
-```bash
-npm install core-js regenerator-runtime @webcomponents/webcomponentsjs lit/polyfill-support.js
-```
-Then import them in your entry/polyfill file:
-```typescript
-import "core-js";
-import "regenerator-runtime";
-import "@webcomponents/webcomponentsjs";
-import "lit/polyfill-support.js";
-```
-
-#### For Angular Projects:
-Angular requires runtime support for async generators:
-```bash
-npm install regenerator-runtime
-```
-Add the following line to your `polyfills.ts`:
-```typescript
-import "regenerator-runtime/runtime";
-```
+### Polyfills
+No SDK-specific polyfills are required for modern supported browsers. Do not add `core-js`, `regenerator-runtime`, `@webcomponents/webcomponentsjs`, or `lit/polyfill-support.js` solely for this SDK unless your application has its own separate browser-support requirements.
 
 ---
 
@@ -62,6 +45,7 @@ The `ac-` prefix denotes **Active Challenge** actions. During a capture process,
 Identity Assurance Detection (IAD) requires a session payload initialized by your backend prior to starting a capture. This payload is passed into the `data` property of `IadConfig` inside your session configurations.
 
 ### The `/prepare` Endpoint
+- **OpenAPI Specification**: https://doc.unissey.com/spec/saas-v3.yaml
 - **HTTP Method**: `POST`
 - **Request Body**: None (empty)
 - **Response Format**: A plain text (`text/plain`) string containing the prepared session token.
