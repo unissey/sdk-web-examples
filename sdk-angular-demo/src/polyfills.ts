@@ -1,3 +1,2 @@
-import './zone-flags';
-import 'regenerator-runtime/runtime';
-import 'zone.js';
+import "./zone-flags";
+import "zone.js";
