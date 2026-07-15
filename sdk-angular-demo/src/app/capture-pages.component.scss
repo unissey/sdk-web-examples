@@ -1,5 +1,11 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
 .page {
   width: min(900px, 100%);
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -12,6 +18,13 @@
   display: grid;
   gap: 16px;
   justify-items: center;
+  width: 100%;
+}
+
+.iad unissey-video-recorder {
+  display: block;
+  justify-self: center;
+  width: min(900px, 100%);
 }
 
 label {
