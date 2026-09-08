@@ -141,9 +141,7 @@ Common pattern:
 const config: SessionConfig = {
   cameraConfig: {
     cameraSelection: FacingMode.FRONT,
-    preferredResolution: VideoResolutionPreset.STD_720P,
     preferredFps: 30,
-    preferredOrientation: VideoOrientation.PORTRAIT,
   },
   recordingConfig: {
     audio: false,
@@ -164,14 +162,13 @@ Web Components:
 <uni-video-recorder preset="selfie-mjpeg"></uni-video-recorder>
 
 <script type="module">
-  import { AcquisitionPreset, FacingMode, VideoResolutionPreset } from "@unissey-web/web-components";
+  import { AcquisitionPreset, FacingMode } from "@unissey-web/web-components";
 
   const recorder = document.querySelector("uni-video-recorder");
   recorder.preset = AcquisitionPreset.SELFIE_MJPEG;
   recorder.config = {
     cameraConfig: {
       cameraSelection: FacingMode.FRONT,
-      preferredResolution: VideoResolutionPreset.STD_720P,
       preferredFps: 30,
     },
     recordingConfig: {
@@ -216,18 +213,14 @@ Angular:
 | Field | Type | Meaning |
 |---|---|---|
 | `cameraSelection` | `FacingMode.FRONT`, `FacingMode.BACK`, or device id string | Selects front camera (`"user"`), back camera (`"environment"`), or an exact device id. |
-| `preferredResolution` | `VideoResolutionPreset` | Requested capture resolution. |
 | `preferredFps` | `number` | Requested frame rate. |
-| `preferredOrientation` | `VideoOrientation` | Requested orientation, usually `PORTRAIT` for selfie and `LANDSCAPE` for wide documents. |
 
 Available resolution constants include `STD_480P`, `STD_720P`, `STD_1080P`, `STD_VGA`, `STD_SVGA`, `STD_XVGA`, `SQUARE_600P`, and `NO_SPECIFIC_RESOLUTION`.
 
 ```typescript
 const cameraConfig: Partial<CameraConfig> = {
   cameraSelection: FacingMode.BACK,
-  preferredResolution: VideoResolutionPreset.STD_1080P,
   preferredFps: 30,
-  preferredOrientation: VideoOrientation.LANDSCAPE,
 };
 ```
 
@@ -359,8 +352,6 @@ const preset = AcquisitionPreset.SELFIE_MJPEG;
 const config: SessionConfig = {
   cameraConfig: {
     cameraSelection: FacingMode.FRONT,
-    preferredResolution: VideoResolutionPreset.STD_720P,
-    preferredOrientation: VideoOrientation.PORTRAIT,
     preferredFps: 30,
   },
   recordingConfig: {
@@ -381,8 +372,6 @@ const preset = AcquisitionPreset.DOC_VIDEO;
 const config: SessionConfig = {
   cameraConfig: {
     cameraSelection: FacingMode.BACK,
-    preferredResolution: VideoResolutionPreset.STD_1080P,
-    preferredOrientation: VideoOrientation.LANDSCAPE,
   },
   recordingConfig: {
     audio: false,
@@ -631,8 +620,6 @@ export type OverlayConfig = {
 
 export interface CameraConfig {
   preferredFps: number;
-  preferredResolution: VideoResolutionPreset;
-  preferredOrientation: VideoOrientation;
   cameraSelection: FacingMode | string;
 }
 
@@ -662,22 +649,6 @@ export enum OverlayDisplayMode {
   RECT_LANDSCAPE = "rect-landscape",
   DEBUG_FRAME = "debug-frame",
   ID_DOCUMENT = "id-document",
-}
-
-export enum VideoResolutionPreset {
-  NO_SPECIFIC_RESOLUTION = "no-specific-resolution",
-  STD_480P = "720x480",
-  STD_720P = "1280x720",
-  STD_1080P = "1920x1080",
-  STD_VGA = "640x480",
-  STD_SVGA = "800x600",
-  STD_XVGA = "1024x768",
-  SQUARE_600P = "600x600",
-}
-
-export enum VideoOrientation {
-  LANDSCAPE = "landscape",
-  PORTRAIT = "portrait",
 }
 
 export enum FacingMode {
@@ -768,11 +739,6 @@ The core headless-powered camera recorder for biometric and document recording. 
 
 <script>
   const recorder = document.getElementById("recorder");
-  
-  // Custom Configuration
-  recorder.config = {
-    cameraConfig: { preferredResolution: "1280x720" }
-  };
   
   recorder.addEventListener("recordCompleted", (e) => {
     const { media, metadata, error } = e.detail;
