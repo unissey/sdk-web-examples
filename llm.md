@@ -42,7 +42,7 @@ The `ac-` prefix denotes **Active Challenge** actions. During a capture process,
 ---
 
 ## 3. IAD Session Initialization (`/prepare` API)
-Identity Assurance Detection (IAD) requires a session payload initialized by your backend prior to starting a capture. This payload is passed into the `data` property of `IadConfig` inside your session configurations.
+Identity Assurance Detection (IAD) requires a session payload initialized by your backend prior to starting a capture. This payload is passed into the `token` property of `IadConfig` inside your session configurations.
 
 ### The `/prepare` Endpoint
 - **OpenAPI Specification**: https://doc.unissey.com/spec/saas-v3.yaml
@@ -327,7 +327,7 @@ Recommended pairings:
 ```typescript
 const config: SessionConfig = {
   iadConfig: {
-    data: preparedSessionToken,
+    token: preparedSessionToken,
     activeChallengeConfig: {
       maxSecondsBetweenActions: 8,
       additionalRecord: false,
@@ -340,7 +340,7 @@ const config: SessionConfig = {
 };
 ```
 
-- `data`: session payload/token returned by the backend `/prepare` or `iad-prepare` call. See section 3; do not invent this value.
+- `token`: session payload/token returned by the backend `/prepare` or `iad-prepare` call. See section 3; do not invent this value.
 - `activeChallengeConfig.maxSecondsBetweenActions`: time budget for each requested action.
 - `additionalRecord`: whether to produce an additional active-challenge recording when supported by the backend flow.
 - `selfieBeforeAction`: number/configuration of selfie frames before action sequence, where supported.
@@ -395,13 +395,13 @@ const config: SessionConfig = {
 };
 ```
 
-#### Active challenge selfie with prepared IAD data
+#### Active challenge
 
 ```typescript
 const preset = AcquisitionPreset.SELFIE_MJPEG;
 const config: SessionConfig = {
   iadConfig: {
-    data: preparedSessionToken,
+    token: preparedSessionToken,
     activeChallengeConfig: {
       maxSecondsBetweenActions: 8,
       additionalRecord: false,
@@ -582,8 +582,8 @@ export interface SessionConfig {
 }
 
 export type IadConfig = {
-  data?: string; // Payload from 'iad-prepare' endpoint. Required except for 'active' and 'passive-lt' modes.
-  activeChallengeConfig?: ActiveChallengeConfig; // Configuration required for 'active' and 'active-fallback' modes.
+  token?: string; // Payload from 'iad-prepare' endpoint.
+  activeChallengeConfig?: ActiveChallengeConfig; // Configuration required for active challenge.
 };
 
 export type ActiveChallengeConfig = {

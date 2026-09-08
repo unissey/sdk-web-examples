@@ -62,8 +62,8 @@ export class CapturePageComponent {
         throw new Error('Provide the IAD prepare URL.');
       }
 
-      const data = await this.analyzeService.performIadPrepare(this.iadPrepareUrl, this.iadApiKey);
-      this.iadConfig = { iadConfig: { data } };
+      const token = await this.analyzeService.performIadPrepare(this.iadPrepareUrl, this.iadApiKey);
+      this.iadConfig = { iadConfig: { token } };
     } catch (error) {
       this.iadError = error instanceof Error ? error.message : String(error);
     } finally {

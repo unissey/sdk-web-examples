@@ -28,7 +28,7 @@ function logEvent(name: string) {
 
 async function performIadPrepare(url: string, apiKey: string): Promise<string> {
   /**
-   * IAD requires prepare data created by your backend before the recorder starts.
+   * IAD requires token created by your backend before the recorder starts.
    * This sample makes the IAD prepare call explicit: provide your prepare URL and
    * API key in the demo page. It does not upload captured media.
    */
@@ -62,8 +62,8 @@ function App() {
         throw new Error('Provide the IAD prepare URL.');
       }
 
-      const data = await performIadPrepare(iadPrepareUrl, iadApiKey);
-      setIadConfig({ iadConfig: { data } });
+      const token = await performIadPrepare(iadPrepareUrl, iadApiKey);
+      setIadConfig({ iadConfig: { token } });
     } catch (error) {
       setIadError(error instanceof Error ? error.message : String(error));
     } finally {

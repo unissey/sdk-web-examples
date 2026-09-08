@@ -49,7 +49,7 @@ The IAD video recorder page asks for:
 - IAD prepare URL
 - API key / Authorization header value
 
-It performs only the IAD prepare request, then passes the returned text as `iadConfig.data` to the recorder. Captured media is not uploaded by these demos.
+It performs only the IAD prepare request, then passes the returned text as `iadConfig.token` to the recorder. Captured media is not uploaded by these demos.
 
 ## Browser/camera notes
 

@@ -28,7 +28,7 @@ The demo has one page per capture flow:
 
 ## Logging behavior
 
-The demo does not upload captured media. Complete a capture, then check the browser console for logged SDK event payloads such as `recordCompleted`, `selfie`, `reference`, `data`, and `recorderReady`.
+The demo does not upload captured media. Complete a capture, then check the browser console for logged SDK event payloads such as `recordCompleted`, `selfie`, `reference`, `token`, and `recorderReady`.
 
 ## IAD prepare page
 
@@ -37,7 +37,7 @@ The IAD page includes form fields for:
 - IAD prepare URL
 - API key / Authorization header value
 
-Click **Prepare IAD session** to call the provided URL with `POST`. The response body is read as text and passed to the recorder as `iadConfig.data`.
+Click **Prepare IAD session** to call the provided URL with `POST`. The response body is read as text and passed to the recorder as `iadConfig.token`.
 
 This is the only HTTP call performed by the demo. Replace or adapt `AnalyzeService.performIadPrepare()` if your project needs a different backend wrapper, headers, or authentication method.
 
