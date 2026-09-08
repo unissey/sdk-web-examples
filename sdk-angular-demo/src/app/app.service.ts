@@ -17,6 +17,6 @@ export class AnalyzeService {
       throw new Error(`IAD prepare failed: ${response.status} ${response.statusText}`);
     }
 
-    return response.text();
+    return await response.text();
   }
 }
