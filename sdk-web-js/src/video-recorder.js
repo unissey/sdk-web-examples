@@ -114,7 +114,7 @@ class VideoRecorder extends HTMLElement {
       if (!sessionConfig.recordingConfig) sessionConfig.recordingConfig = {};
       sessionConfig.recordingConfig.length = {
         type: "duration",
-        durationMs: 0, // This...
+        durationMs: 8000, // increase the recording length. Set 0 will involve "infinite" recording, i.e. the recording will stop when explicitely sending "stopRecording" event.
       };
     }
 
